@@ -7,7 +7,6 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const invoiceId = searchParams.get('id');
-    const download = searchParams.get('download');
     
     if (invoiceId) {
       // Get specific invoice
@@ -17,18 +16,6 @@ export async function GET(request: NextRequest) {
           { error: 'Invoice not found' },
           { status: 404 }
         );
-      }
-      
-      // If download is requested, generate PDF
-      if (download === 'true') {
-        // In a real implementation, you would generate a PDF
-        // For now, we'll return a simple text response
-        return new NextResponse('PDF content would be here', {
-          headers: {
-            'Content-Type': 'application/pdf',
-            'Content-Disposition': `attachment; filename="invoice-${invoiceId}.pdf"`
-          }
-        });
       }
       
       return NextResponse.json({
