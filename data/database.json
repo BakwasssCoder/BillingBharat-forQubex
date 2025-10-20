@@ -1,0 +1,154 @@
+{
+  "customers": [
+    {
+      "id": "cust_1760945131821",
+      "name": "Test Customer",
+      "phone": "1234567890",
+      "address": "123 Test Street",
+      "city": "Test City",
+      "createdAt": "2025-10-20T07:25:31.821Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord_1760945131834",
+      "customerId": "cust_1760945131821",
+      "customer": {
+        "id": "cust_1760945131821",
+        "name": "Test Customer",
+        "phone": "1234567890",
+        "address": "123 Test Street",
+        "city": "Test City",
+        "createdAt": "2025-10-20T07:25:31.821Z"
+      },
+      "items": [
+        {
+          "id": "item_1",
+          "name": "Test Item",
+          "quantity": 1,
+          "price": 100
+        }
+      ],
+      "deliveryPartnerId": "dp1",
+      "deliveryPartner": {
+        "id": "dp1",
+        "name": "Express Delivery",
+        "charges": 80
+      },
+      "serviceFee": 200,
+      "gst": 0,
+      "totalAmount": 380,
+      "status": "received",
+      "paymentMethod": "UPI",
+      "createdAt": "2025-10-20T07:25:31.834Z",
+      "updatedAt": "2025-10-20T07:25:31.834Z"
+    }
+  ],
+  "deliveryPartners": [
+    {
+      "id": "dp1",
+      "name": "Express Delivery",
+      "charges": 80
+    },
+    {
+      "id": "dp2",
+      "name": "Speedy Shipping",
+      "charges": 100
+    },
+    {
+      "id": "dp3",
+      "name": "Fast Freight",
+      "charges": 120
+    }
+  ],
+  "invoices": [
+    {
+      "id": "inv_1760945168763",
+      "orderId": "ord_1760945131834",
+      "order": {
+        "id": "ord_1760945131834",
+        "customerId": "cust_1760945131821",
+        "customer": {
+          "id": "cust_1760945131821",
+          "name": "Test Customer",
+          "phone": "1234567890",
+          "address": "123 Test Street",
+          "city": "Test City",
+          "createdAt": "2025-10-20T07:25:31.821Z"
+        },
+        "items": [
+          {
+            "id": "item_1",
+            "name": "Test Item",
+            "quantity": 1,
+            "price": 100
+          }
+        ],
+        "deliveryPartnerId": "dp1",
+        "deliveryPartner": {
+          "id": "dp1",
+          "name": "Express Delivery",
+          "charges": 80
+        },
+        "serviceFee": 200,
+        "gst": 0,
+        "totalAmount": 380,
+        "status": "received",
+        "paymentMethod": "UPI",
+        "createdAt": "2025-10-20T07:25:31.834Z",
+        "updatedAt": "2025-10-20T07:25:31.834Z"
+      },
+      "invoiceNumber": "INV-QBX-20251020",
+      "issuedDate": "2025-10-20T07:26:08.763Z",
+      "dueDate": "2025-10-27T07:26:08.763Z",
+      "pdfUrl": "/api/invoices/ord_1760945131834/download",
+      "isSent": false,
+      "createdAt": "2025-10-20T07:26:08.763Z"
+    },
+    {
+      "id": "inv_1760945691211",
+      "orderId": "ord_1760945131834",
+      "order": {
+        "id": "ord_1760945131834",
+        "customerId": "cust_1760945131821",
+        "customer": {
+          "id": "cust_1760945131821",
+          "name": "Test Customer",
+          "phone": "1234567890",
+          "address": "123 Test Street",
+          "city": "Test City",
+          "createdAt": "2025-10-20T07:25:31.821Z"
+        },
+        "items": [
+          {
+            "id": "item_1",
+            "name": "Test Item",
+            "quantity": 1,
+            "price": 100
+          }
+        ],
+        "deliveryPartnerId": "dp1",
+        "deliveryPartner": {
+          "id": "dp1",
+          "name": "Express Delivery",
+          "charges": 80
+        },
+        "serviceFee": 200,
+        "gst": 0,
+        "totalAmount": 380,
+        "status": "received",
+        "paymentMethod": "UPI",
+        "createdAt": "2025-10-20T07:25:31.834Z",
+        "updatedAt": "2025-10-20T07:25:31.834Z"
+      },
+      "invoiceNumber": "INV-QBX-202510202",
+      "issuedDate": "2025-10-20T07:34:51.210Z",
+      "dueDate": "2025-10-27T07:34:51.210Z",
+      "pdfUrl": "/api/invoices/ord_1760945131834/download",
+      "isSent": false,
+      "createdAt": "2025-10-20T07:34:51.211Z",
+      "status": "completed"
+    }
+  ],
+  "payments": []
+}

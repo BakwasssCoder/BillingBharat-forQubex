@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qubex Print Agent</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        .status {
+            font-size: 1rem;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .printer-list {
+            margin-top: 30px;
+            text-align: left;
+            width: 100%;
+        }
+        .printer-list h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .printer-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Qubex Print Agent</h1>
+        <p>Local printing service for Qubex: BuyNDeliver™</p>
+        
+        <div class="status" id="status">
+            Status: Running on port 4321
+        </div>
+        
+        <div class="printer-list">
+            <h2>Connected Printers</h2>
+            <div class="printer-item">
+                <span>Default Printer</span>
+                <span>Ready</span>
+            </div>
+            <div class="printer-item">
+                <span>Bluetooth Printer (00:11:22:33:44:55)</span>
+                <span>Ready</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // You can add client-side JavaScript here if needed
+        console.log('Qubex Print Agent loaded');
+    </script>
+</body>
+</html>

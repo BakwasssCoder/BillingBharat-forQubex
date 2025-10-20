@@ -1,0 +1,21 @@
+{
+  "name": "qubex-print-agent",
+  "version": "1.0.0",
+  "description": "Local print agent for Qubex: BuyNDeliver™",
+  "main": "print-agent.js",
+  "scripts": {
+    "start": "electron print-agent.js",
+    "dev": "electron print-agent.js"
+  },
+  "keywords": [
+    "electron",
+    "print",
+    "agent",
+    "qubex"
+  ],
+  "author": "QuickBuy Boy",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^24.0.0"
+  }
+}
