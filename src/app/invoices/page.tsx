@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import dynamic from 'next/dynamic';
 import { 
   Search, 
   Filter, 
@@ -13,11 +13,16 @@ import {
   Trash2
 } from "lucide-react";
 import { formatCurrency } from "@/utils/format";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getInvoices, deleteInvoice, createInvoice } from "@/utils/api";
 import { generateSequentialInvoiceNumber } from "@/utils/invoice";
+
+// Dynamically import components with lazy loading
+const Card = dynamic(() => import('@/components/ui/card').then(mod => mod.Card), { ssr: false });
+const CardContent = dynamic(() => import('@/components/ui/card').then(mod => mod.CardContent), { ssr: false });
+const CardHeader = dynamic(() => import('@/components/ui/card').then(mod => mod.CardHeader), { ssr: false });
+const CardTitle = dynamic(() => import('@/components/ui/card').then(mod => mod.CardTitle), { ssr: false });
+const Button = dynamic(() => import('@/components/ui/button').then(mod => mod.Button), { ssr: false });
 
 interface Invoice {
   id: string;
@@ -315,11 +320,8 @@ export default function InvoicesPage() {
                   </tr>
                 ) : (
                   filteredInvoices.map((invoice, index) => (
-                    <motion.tr
+                    <tr
                       key={invoice.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
                       className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800"
                     >
                       <td className="py-4 px-4 font-medium text-gray-900 dark:text-white">{invoice.invoiceNumber}</td>
@@ -360,7 +362,7 @@ export default function InvoicesPage() {
                           </Button>
                         </div>
                       </td>
-                    </motion.tr>
+                    </tr>
                   ))
                 )}
               </tbody>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import dynamic from 'next/dynamic';
 import { 
   ShoppingCart, 
   FileText, 
@@ -13,9 +13,14 @@ import {
   AlertCircle
 } from "lucide-react";
 import { formatCurrency } from "@/utils/format";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getAnalyticsData, getOrders } from "@/utils/api";
+
+// Dynamically import components with lazy loading
+const Card = dynamic(() => import('@/components/ui/card').then(mod => mod.Card), { ssr: false });
+const CardContent = dynamic(() => import('@/components/ui/card').then(mod => mod.CardContent), { ssr: false });
+const CardHeader = dynamic(() => import('@/components/ui/card').then(mod => mod.CardHeader), { ssr: false });
+const CardTitle = dynamic(() => import('@/components/ui/card').then(mod => mod.CardTitle), { ssr: false });
 
 // Types for our data
 interface CityWiseOrder {
@@ -112,125 +117,90 @@ export default function DashboardPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Card className="bg-gradient-to-br from-indigo-500 to-violet-600 text-white border-0">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Today's Revenue</CardTitle>
-              <IndianRupee className="h-4 w-4 text-indigo-200" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{formatCurrency(analytics.revenue.today)}</div>
-              <p className="text-xs text-indigo-200">+0% from yesterday</p>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <Card className="bg-gradient-to-br from-indigo-500 to-violet-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Today's Revenue</CardTitle>
+            <IndianRupee className="h-4 w-4 text-indigo-200" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{formatCurrency(analytics.revenue.today)}</div>
+            <p className="text-xs text-indigo-200">+0% from yesterday</p>
+          </CardContent>
+        </Card>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-        >
-          <Card className="bg-gradient-to-br from-emerald-500 to-teal-600 text-white border-0">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">This Week</CardTitle>
-              <TrendingUp className="h-4 w-4 text-emerald-200" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{formatCurrency(analytics.revenue.week)}</div>
-              <p className="text-xs text-emerald-200">+0% from last week</p>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <Card className="bg-gradient-to-br from-emerald-500 to-teal-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">This Week</CardTitle>
+            <TrendingUp className="h-4 w-4 text-emerald-200" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{formatCurrency(analytics.revenue.week)}</div>
+            <p className="text-xs text-emerald-200">+0% from last week</p>
+          </CardContent>
+        </Card>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.2 }}
-        >
-          <Card className="bg-gradient-to-br from-amber-500 to-orange-600 text-white border-0">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Service Fees</CardTitle>
-              <FileText className="h-4 w-4 text-amber-200" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{formatCurrency(analytics.serviceFeeCollection)}</div>
-              <p className="text-xs text-amber-200">Collected this month</p>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <Card className="bg-gradient-to-br from-amber-500 to-orange-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Service Fees</CardTitle>
+            <FileText className="h-4 w-4 text-amber-200" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{formatCurrency(analytics.serviceFeeCollection)}</div>
+            <p className="text-xs text-amber-200">Collected this month</p>
+          </CardContent>
+        </Card>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.3 }}
-        >
-          <Card className="bg-gradient-to-br from-rose-500 to-pink-600 text-white border-0">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Invoices</CardTitle>
-              <Clock className="h-4 w-4 text-rose-200" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{analytics.pendingInvoices}</div>
-              <p className="text-xs text-rose-200">Need attention</p>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <Card className="bg-gradient-to-br from-rose-500 to-pink-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Pending Invoices</CardTitle>
+            <Clock className="h-4 w-4 text-rose-200" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{analytics.pendingInvoices}</div>
+            <p className="text-xs text-rose-200">Need attention</p>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Charts and Recent Orders */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Orders */}
-        <motion.div
-          className="lg:col-span-2"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.4 }}
-        >
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <ShoppingCart className="mr-2 h-5 w-5" />
-                Recent Orders
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {recentOrders.map((order, index) => (
-                  <div key={order.id} className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors">
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">{order.id}</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">{order.customer?.name || 'Unknown Customer'}</p>
-                    </div>
-                    <div className="flex items-center space-x-4">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        order.status === 'received' ? 'bg-blue-100 text-blue-800' :
-                        order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' :
-                        order.status === 'invoiced' ? 'bg-green-100 text-green-800' :
-                        'bg-purple-100 text-purple-800'
-                      }`}>
-                        {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                      </span>
-                      <span className="font-medium text-gray-900 dark:text-white">
-                        {formatCurrency(order.totalAmount)}
-                      </span>
-                    </div>
+        <Card className="lg:col-span-2">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <ShoppingCart className="mr-2 h-5 w-5" />
+              Recent Orders
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {recentOrders.map((order, index) => (
+                <div key={order.id} className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">{order.id}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{order.customer?.name || 'Unknown Customer'}</p>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+                  <div className="flex items-center space-x-4">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      order.status === 'received' ? 'bg-blue-100 text-blue-800' :
+                      order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' :
+                      order.status === 'invoiced' ? 'bg-green-100 text-green-800' :
+                      'bg-purple-100 text-purple-800'
+                    }`}>
+                      {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                    </span>
+                    <span className="font-medium text-gray-900 dark:text-white">
+                      {formatCurrency(order.totalAmount)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Quick Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.5 }}
-        >
+        <div>
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
@@ -290,7 +260,7 @@ export default function DashboardPage() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

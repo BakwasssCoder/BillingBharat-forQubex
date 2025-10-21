@@ -10,9 +10,22 @@ import {
   CheckCircle
 } from "lucide-react";
 import { getInvoiceById } from "@/utils/api";
-import { InvoiceTemplate } from "@/components/invoice/invoice-template";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import dynamic from 'next/dynamic';
+
+// Dynamically import InvoiceTemplate with lazy loading
+const InvoiceTemplate = dynamic(
+  () => import('@/components/invoice/invoice-template'),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      </div>
+    )
+  }
+);
 
 interface Invoice {
   id: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import dynamic from 'next/dynamic';
 import { 
   Search, 
   Filter, 
@@ -14,13 +14,18 @@ import {
   MessageCircle
 } from "lucide-react";
 import { formatCurrency } from "@/utils/format";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getOrders, deleteOrder } from "@/utils/api";
-import { OrderForm } from "@/components/orders/order-form";
-import { OrderDetails } from "@/components/orders/order-details";
-import { EditOrderForm } from "@/components/orders/edit-order-form";
+
+// Dynamically import components with lazy loading
+const Card = dynamic(() => import('@/components/ui/card').then(mod => mod.Card), { ssr: false });
+const CardContent = dynamic(() => import('@/components/ui/card').then(mod => mod.CardContent), { ssr: false });
+const CardHeader = dynamic(() => import('@/components/ui/card').then(mod => mod.CardHeader), { ssr: false });
+const CardTitle = dynamic(() => import('@/components/ui/card').then(mod => mod.CardTitle), { ssr: false });
+const Button = dynamic(() => import('@/components/ui/button').then(mod => mod.Button), { ssr: false });
+const OrderForm = dynamic(() => import('@/components/orders/order-form').then(mod => mod.OrderForm), { ssr: false });
+const OrderDetails = dynamic(() => import('@/components/orders/order-details').then(mod => mod.OrderDetails), { ssr: false });
+const EditOrderForm = dynamic(() => import('@/components/orders/edit-order-form').then(mod => mod.EditOrderForm), { ssr: false });
 
 interface Order {
   id: string;
@@ -261,51 +266,29 @@ export default function OrdersPage() {
         </Button>
       </div>
 
-      {/* Order Form */}
-      {showForm && !viewingOrderId && !editingOrder && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <OrderForm onOrderCreated={() => {
-            setShowForm(false);
+      {/* Order Form */}{showForm && !viewingOrderId && !editingOrder && (
+        <OrderForm onOrderCreated={() => {
+          setShowForm(false);
+          fetchOrders();
+        }} />
+      )}
+
+      {/* Order Details */}{viewingOrderId && !editingOrder && (
+        <OrderDetails orderId={viewingOrderId} onBack={() => setViewingOrderId(null)} />
+      )}
+
+      {/* Edit Order Form */}{editingOrder && (
+        <EditOrderForm 
+          order={editingOrder} 
+          onOrderUpdated={() => {
+            setEditingOrder(null);
             fetchOrders();
-          }} />
-        </motion.div>
+          }}
+          onCancel={() => setEditingOrder(null)}
+        />
       )}
 
-      {/* Order Details */}
-      {viewingOrderId && !editingOrder && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <OrderDetails orderId={viewingOrderId} onBack={() => setViewingOrderId(null)} />
-        </motion.div>
-      )}
-
-      {/* Edit Order Form */}
-      {editingOrder && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <EditOrderForm 
-            order={editingOrder} 
-            onOrderUpdated={() => {
-              setEditingOrder(null);
-              fetchOrders();
-            }}
-            onCancel={() => setEditingOrder(null)}
-          />
-        </motion.div>
-      )}
-
-      {/* Filters */}
-      {!viewingOrderId && (
+      {/* Filters */}{!viewingOrderId && (
         <Card>
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row gap-4">
@@ -353,8 +336,7 @@ export default function OrdersPage() {
         </Card>
       )}
 
-      {/* Orders Table */}
-      {!viewingOrderId && (
+      {/* Orders Table */}{!viewingOrderId && (
         <Card>
           <CardHeader>
             <CardTitle>Order List</CardTitle>
@@ -382,11 +364,8 @@ export default function OrdersPage() {
                     </tr>
                   ) : (
                     filteredOrders.map((order, index) => (
-                      <motion.tr
+                      <tr
                         key={order.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
                         className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800"
                       >
                         <td className="py-4 px-4 font-medium text-gray-900 dark:text-white">{order.id}</td>
@@ -427,7 +406,7 @@ export default function OrdersPage() {
                             </Button>
                           </div>
                         </td>
-                      </motion.tr>
+                      </tr>
                     ))
                   )}
                 </tbody>
